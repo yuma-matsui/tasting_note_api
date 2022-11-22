@@ -13,7 +13,7 @@ RSpec.describe Api::V1::HelloController, type: :controller do
   describe 'hello' do
     it 'respondes successfully' do
       hello = 'hello'
-      expect(hello).to eq 'good bye'
+      expect(hello).to eq 'hello'
     end
   end
 end
