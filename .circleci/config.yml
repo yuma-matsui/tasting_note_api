@@ -1,0 +1,79 @@
+version: 2.1
+
+jobs:
+  test_api:
+    docker:
+      - image: cimg/ruby:3.1.2-node
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 0.0.0.0
+
+      - image: cimg/postgres:15.0
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ checksum "Gemfile.lock" }}
+            - gem-cache-v1-
+
+      - run:
+          command: |
+            gem install bundler
+            bundle config set path 'vendor/bundle'
+            bundle install --jobs=4 --retry=3
+
+      - save_cache:
+          key: gem-cache-v1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ./vendor/bundle
+
+      - run:
+          name: rubocop
+          command: bundle exec rubocop
+          working_directory: ./
+
+      - run:
+          name: wait for building database
+          command: |
+            dockerize -wait \
+              tcp://${DB_HOST}:5432 -timeout 120s
+
+      - run:
+          command: bundle exec rails db:create
+      - run:
+          command: bundle exec rails db:migrate
+
+      - run:
+          name: create directory to store test results
+          command: mkdir /tmp/test-results
+
+      - run:
+          name: RSpec
+          command: |
+            bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
+              || (printf "==== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
+          working_directory: ./
+
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+      - store_artifacts:
+          path: /home/circleci/repo/tmp/screenshots
+
+workflows:
+  build_test:
+    jobs:
+      - test_api:
+          filters:
+            branches:
+              ignore: main
