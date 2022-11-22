@@ -6,7 +6,7 @@ jobs:
       - image: cimg/ruby:3.1.2-node
         environment:
           RAILS_ENV: test
-          DB_HOST: 0.0.0.0
+          DB_HOST: 127.0.0.1
 
       - image: cimg/postgres:15.0
         environment:
