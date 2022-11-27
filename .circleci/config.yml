@@ -7,9 +7,6 @@ jobs:
         environment:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-
       - image: cimg/postgres:15.0
         environment:
           POSTGRES_USER: postgres
@@ -80,5 +77,3 @@ workflows:
           filters:
             branches:
               ignore: main
-
-# VS Code Extension Version: 1.1.1

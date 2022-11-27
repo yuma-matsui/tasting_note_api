@@ -1,12 +1,11 @@
 FROM ruby:3.1.2-alpine
 
-ARG WORKDIR
 ARG RUNTIME_PACKAGES="nodejs tzdata postgresql-dev postgresql git"
 ARG DEV_PACKAGES="build-base curl-dev"
 
 ENV TZ=Asia/Tokyo
 
-WORKDIR ${WORKDIR}
+WORKDIR /app
 
 COPY Gemfile* ./
 
@@ -16,3 +15,5 @@ RUN apk update && \
     apk add --virtual build-dependencies --no-cache ${DEV_PACKAGES} && \
     bundle install -j4 && \
     apk del build-dependencies
+
+COPY . ./
