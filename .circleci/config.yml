@@ -1,7 +1,7 @@
 version: 2.1
 
-jobs:
-  test_api:
+executors:
+  test_images:
     docker:
       - image: cimg/ruby:3.1.2-node
         environment:
@@ -13,55 +13,36 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_HOST_AUTH_METHOD: trust
 
-    parallelism: 2
-    working_directory: ~/repo
-
+commands:
+  bundle_install:
     steps:
-      - checkout
-
       - restore_cache:
           keys:
             - gem-cache-v1-{{ checksum "Gemfile.lock" }}
             - gem-cache-v1-
-
       - run:
           command: |
             gem install bundler
             bundle config set path 'vendor/bundle'
             bundle install --jobs=4 --retry=3
-
       - save_cache:
           key: gem-cache-v1-{{ checksum "Gemfile.lock" }}
           paths:
             - ./vendor/bundle
-
+  build_database:
+    steps:
       - run:
-          name: rubocop
-          command: bundle exec rubocop
-          working_directory: ./
-
-      - run:
-          name: wait for building database
           command: |
             dockerize -wait \
               tcp://${DB_HOST}:5432 -timeout 120s
-
       - run:
           command: bundle exec rails db:create
       - run:
           command: bundle exec rails db:migrate
-
+  save_test_results:
+    steps:
       - run:
-          name: create directory to store test results
           command: mkdir /tmp/test-results
-
-      - run:
-          name: RSpec
-          command: |
-            bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
-              || (printf "==== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
-          working_directory: ./
-
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
@@ -70,10 +51,29 @@ jobs:
       - store_artifacts:
           path: /home/circleci/repo/tmp/screenshots
 
+jobs:
+  build_and_test:
+    executor: test_images
+    parallelism: 2
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - bundle_install
+      - run:
+          name: rubocop
+          command: bundle exec rubocop
+      - build_database
+      - run:
+          name: RSpec
+          command: |
+            bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
+              || (printf "==== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
+      - save_test_results
+
 workflows:
-  build_test:
+  test:
     jobs:
-      - test_api:
+      - build_and_test:
           filters:
             branches:
               ignore: main
