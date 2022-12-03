@@ -91,9 +91,9 @@ workflows:
             branches:
               only: main
       - aws-ecs/deploy-service-update:
-          family: "{AWS_RESOURCE_NAME_PREFIX}-task"
-          cluster: "{AWS_RESOURCE_NAME_PREFIX}-cluster"
-          service-name: "{AWS_RESOURCE_NAME_PREFIX}-service"
+          family: "${AWS_RESOURCE_NAME_PREFIX}-task"
+          cluster: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
+          service-name: "${AWS_RESOURCE_NAME_PREFIX}-service"
           container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-container,tag=${CIRCLE_SHA1}"
           requires:
             - aws-ecr/build-and-push-image
