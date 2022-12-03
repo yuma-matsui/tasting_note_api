@@ -85,6 +85,9 @@ test:
 #
 production:
   <<: *default
-  database: app_production
-  username: app
-  password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+  encoding: utf8
+  database: <%= Rails.application.credentials.production.aws.db[:name] %>
+  username: <%= Rails.application.credentials.production.aws.db[:username] %>
+  password: <%= Rails.application.credentials.production.aws.db[:password] %>
+  host: <%= Rails.application.credentials.production.aws.db[:host] %>
+  port: <%= Rails.application.credentials.production.aws.db[:port] %>
