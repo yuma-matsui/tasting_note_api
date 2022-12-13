@@ -2,6 +2,6 @@
 
 class Api::V1::HelloController < ApplicationController
   def index
-    render json: 'Hello Tasting Note'
+    render json: 'HelloTastingNote'
   end
 end
