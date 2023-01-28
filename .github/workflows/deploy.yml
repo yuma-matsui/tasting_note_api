@@ -3,7 +3,7 @@ name: deploy
 on:
   push:
     branches:
-      - main
+      - development
 
 jobs:
   deploy:
@@ -55,4 +55,3 @@ jobs:
           service: ${{ secrets.SERVICE_PREFIX }}-service-v2
           cluster: ${{ secrets.SERVICE_PREFIX }}-cluster
           wait-for-service-stability: true
-
