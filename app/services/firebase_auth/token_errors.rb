@@ -12,8 +12,9 @@ module FirebaseAuth
     end
 
     def initialize(token)
-      @header = token[:header]
-      @payload = token[:payload]
+      decoded_token = FirebaseAuth.decode(token)
+      @payload = decoded_token[:payload]
+      @header = decoded_token[:header]
       @messages = validate_token
     end
 

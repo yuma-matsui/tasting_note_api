@@ -8,11 +8,12 @@ module FirebaseAuth
 
     attr_reader :public_key
 
-    def self.get(key_id)
-      new(key_id).public_key
+    def self.get(token)
+      new(token).public_key
     end
 
-    def initialize(key_id)
+    def initialize(token)
+      key_id = FirebaseAuth.decode(token)[:header]['kid']
       certificate = fetch_cert[key_id]
       raise 'Firebase ID has invalid kid.' unless certificate
 
