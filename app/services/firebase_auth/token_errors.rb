@@ -3,6 +3,7 @@
 module FirebaseAuth
   class TokenErrors
     ISSUER_BASE_URL = 'https://securetoken.google.com/'
+    BASE_ERROR_MESSAGE = 'Firebase ID token has '
 
     attr_reader :header, :payload, :messages
 
@@ -60,10 +61,6 @@ module FirebaseAuth
       @payload['iss'] == issuer
     end
 
-    def base_error_message
-      'Firebase ID token has '
-    end
-
     def validate_token
       errors = []
 
@@ -73,7 +70,7 @@ module FirebaseAuth
       errors << %(incorrect "iss"(issuer) claim.) unless valid_issuer?
       errors << %(incorrect "sub" claim.) unless valid_sub?
 
-      errors.map { |error| base_error_message + error }
+      errors.map { |error| BASE_ERROR_MESSAGE + error }
     end
   end
 end
