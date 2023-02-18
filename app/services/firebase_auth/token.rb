@@ -9,8 +9,6 @@ module FirebaseAuth
     end
 
     def initialize(token)
-      raise 'ID token must be a String' unless token.is_a?(String)
-
       TokenErrors.check(token)
       @token = FirebaseAuth.decode(token, GooglePublicKey.get(token), true, { algorithm: algorithm, verify_iat: true })
     end

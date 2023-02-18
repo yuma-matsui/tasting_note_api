@@ -13,9 +13,9 @@ module FirebaseAuth
     end
 
     def initialize(token)
-      decoded_token = FirebaseAuth.decode(token)
-      @payload = decoded_token[:payload]
-      @header = decoded_token[:header]
+      raise 'ID token must be a String' unless token.is_a?(String)
+
+      @payload, @header = FirebaseAuth.decode(token).values_at(:payload, :header)
       @messages = validate_token
     end
 
