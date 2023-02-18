@@ -15,7 +15,6 @@ module FirebaseAuth
     def initialize(token)
       key_id = FirebaseAuth.decode(token)[:header]['kid']
       certificate = fetch_cert[key_id]
-      raise 'Firebase ID has invalid kid.' unless certificate
 
       @public_key = OpenSSL::X509::Certificate.new(certificate).public_key
     end
@@ -27,6 +26,8 @@ module FirebaseAuth
       https = Net::HTTP.new(uri.host, uri.port)
       https.use_ssl = true
       result = JSON.parse(https.start { https.get(uri.request_uri) }.body)
+
+      raise 'Firebase ID has invalid kid.' unless result
       raise 'Fetching Error. Not get certificate.' if result['error']
 
       result
