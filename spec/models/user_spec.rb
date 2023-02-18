@@ -22,9 +22,16 @@ RSpec.describe User, type: :model do
         expect(user).to be_valid
       end
 
-      example 'invalid' do
+      example 'invalid with blank uid' do
         user.uid = ''
         expect(user).to be_invalid
+      end
+
+      example 'invalid with same unique uid' do
+        user.save
+        other_user = FactoryBot.build(:user)
+        other_user.uid = user.uid
+        expect(other_user).to be_invalid
       end
     end
   end
