@@ -4,7 +4,7 @@ class CreateConclusions < ActiveRecord::Migration[7.0]
       t.string :evaluation,          null: false
       t.string :optimum_temperature, null: false
       t.string :glass,               null: false
-      t.string :decantage,           default: nil
+      t.string :decantage
       t.string :vintage,             null: false
       t.string :country,             null: false
       t.string :grape,               null: false
