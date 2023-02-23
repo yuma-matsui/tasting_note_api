@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_053406) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,6 +39,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_053406) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tasting_sheet_id"], name: "index_appearances_on_tasting_sheet_id"
+  end
+
+  create_table "conclusions", force: :cascade do |t|
+    t.string "evaluation", null: false
+    t.string "optimum_temperature", null: false
+    t.string "glass", null: false
+    t.string "decantage"
+    t.string "vintage", null: false
+    t.string "country", null: false
+    t.string "grape", null: false
+    t.bigint "tasting_sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tasting_sheet_id"], name: "index_conclusions_on_tasting_sheet_id"
   end
 
   create_table "flavor_first_impressions", force: :cascade do |t|
@@ -125,6 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_053406) do
   add_foreign_key "appearance_colors", "appearances"
   add_foreign_key "appearance_impressions", "appearances"
   add_foreign_key "appearances", "tasting_sheets"
+  add_foreign_key "conclusions", "tasting_sheets"
   add_foreign_key "flavor_first_impressions", "flavors"
   add_foreign_key "flavor_flowers", "flavors"
   add_foreign_key "flavor_fruits", "flavors"
