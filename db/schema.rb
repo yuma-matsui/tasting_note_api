@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_030814) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_23_050432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,53 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_030814) do
     t.index ["tasting_sheet_id"], name: "index_appearances_on_tasting_sheet_id"
   end
 
+  create_table "flavor_first_impressions", force: :cascade do |t|
+    t.string "flavor_first_impression", null: false
+    t.bigint "flavor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flavor_id"], name: "index_flavor_first_impressions_on_flavor_id"
+  end
+
+  create_table "flavor_flowers", force: :cascade do |t|
+    t.string "flower", null: false
+    t.bigint "flavor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flavor_id"], name: "index_flavor_flowers_on_flavor_id"
+  end
+
+  create_table "flavor_fruits", force: :cascade do |t|
+    t.string "fruit", null: false
+    t.bigint "flavor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flavor_id"], name: "index_flavor_fruits_on_flavor_id"
+  end
+
+  create_table "flavor_impressions", force: :cascade do |t|
+    t.string "impression", null: false
+    t.bigint "flavor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flavor_id"], name: "index_flavor_impressions_on_flavor_id"
+  end
+
+  create_table "flavor_spices", force: :cascade do |t|
+    t.string "spice", null: false
+    t.bigint "flavor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flavor_id"], name: "index_flavor_spices_on_flavor_id"
+  end
+
+  create_table "flavors", force: :cascade do |t|
+    t.bigint "tasting_sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tasting_sheet_id"], name: "index_flavors_on_tasting_sheet_id"
+  end
+
   create_table "tasting_sheets", force: :cascade do |t|
     t.string "name", null: false
     t.string "color", null: false
@@ -63,5 +110,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_030814) do
   add_foreign_key "appearance_colors", "appearances"
   add_foreign_key "appearance_impressions", "appearances"
   add_foreign_key "appearances", "tasting_sheets"
+  add_foreign_key "flavor_first_impressions", "flavors"
+  add_foreign_key "flavor_flowers", "flavors"
+  add_foreign_key "flavor_fruits", "flavors"
+  add_foreign_key "flavor_impressions", "flavors"
+  add_foreign_key "flavor_spices", "flavors"
+  add_foreign_key "flavors", "tasting_sheets"
   add_foreign_key "tasting_sheets", "users"
 end
