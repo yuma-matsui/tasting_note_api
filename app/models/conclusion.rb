@@ -6,7 +6,7 @@ class Conclusion < ApplicationRecord
   validates :evaluation,          presence: true
   validates :optimum_temperature, presence: true
   validates :glass,               presence: true
-  validates :vintange,            presence: true
+  validates :vintage,             presence: true
   validates :country,             presence: true
   validates :grape,               presence: true
 end
