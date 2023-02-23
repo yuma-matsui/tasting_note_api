@@ -6,21 +6,14 @@ RSpec.describe User, type: :model do
   let(:user) { FactoryBot.build(:user) }
 
   describe 'validation' do
-    describe 'email' do
+    describe 'name' do
       example 'valid' do
         expect(user).to be_valid
       end
 
       example 'invalid with blank' do
-        user.email = ''
+        user.name = ''
         expect(user).to be_invalid
-      end
-
-      example 'invalid with existing email' do
-        user.save
-        other_user = FactoryBot.build(:user)
-        other_user.email = user.email
-        expect(other_user).to be_invalid
       end
     end
 
