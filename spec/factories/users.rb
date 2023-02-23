@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :user do
-    sequence(:uid)   { |n| "testUid-#{n}" }
-    sequence(:email) { |n| "test#{n}@example.com" }
+    sequence(:uid) { |n| "testUid-#{n}" }
+    name           { 'tasting-sheet-user' }
   end
 end
