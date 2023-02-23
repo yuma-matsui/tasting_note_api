@@ -110,7 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
     t.string "astringent"
     t.string "balance", null: false
     t.string "alcohol", null: false
-    t.string "afterTaste", null: false
+    t.string "after_taste", null: false
     t.bigint "tasting_sheet_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
