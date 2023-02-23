@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_050432) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_23_053406) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,6 +88,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_050432) do
     t.index ["tasting_sheet_id"], name: "index_flavors_on_tasting_sheet_id"
   end
 
+  create_table "tastes", force: :cascade do |t|
+    t.string "attack", null: false
+    t.string "sweetness", null: false
+    t.string "acidity", null: false
+    t.string "bitterness"
+    t.string "astringent"
+    t.string "balance", null: false
+    t.string "alcohol", null: false
+    t.string "afterTaste", null: false
+    t.bigint "tasting_sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tasting_sheet_id"], name: "index_tastes_on_tasting_sheet_id"
+  end
+
   create_table "tasting_sheets", force: :cascade do |t|
     t.string "name", null: false
     t.string "color", null: false
@@ -116,5 +131,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_050432) do
   add_foreign_key "flavor_impressions", "flavors"
   add_foreign_key "flavor_spices", "flavors"
   add_foreign_key "flavors", "tasting_sheets"
+  add_foreign_key "tastes", "tasting_sheets"
   add_foreign_key "tasting_sheets", "users"
 end
