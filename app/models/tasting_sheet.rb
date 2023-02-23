@@ -2,7 +2,9 @@
 
 class TastingSheet < ApplicationRecord
   belongs_to :user
-  validates :name, presence: true
+  has_one :appearance, dependent: :destroy
+
+  validates :name,  presence: true
   validates :color, presence: true
-  validates :time, presence: true
+  validates :time,  presence: true
 end
