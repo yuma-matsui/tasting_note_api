@@ -10,9 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_025441) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_23_030814) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appearance_colors", force: :cascade do |t|
+    t.string "color", null: false
+    t.bigint "appearance_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appearance_id"], name: "index_appearance_colors_on_appearance_id"
+  end
+
+  create_table "appearance_impressions", force: :cascade do |t|
+    t.string "impression", null: false
+    t.bigint "appearance_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appearance_id"], name: "index_appearance_impressions_on_appearance_id"
+  end
+
+  create_table "appearances", force: :cascade do |t|
+    t.string "clarity", null: false
+    t.string "brightness", null: false
+    t.string "intensity", null: false
+    t.string "consistency", null: false
+    t.bigint "tasting_sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tasting_sheet_id"], name: "index_appearances_on_tasting_sheet_id"
+  end
 
   create_table "tasting_sheets", force: :cascade do |t|
     t.string "name", null: false
@@ -33,5 +60,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_025441) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "appearance_colors", "appearances"
+  add_foreign_key "appearance_impressions", "appearances"
+  add_foreign_key "appearances", "tasting_sheets"
   add_foreign_key "tasting_sheets", "users"
 end
