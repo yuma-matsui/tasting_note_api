@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
   end
 
   create_table "flavor_first_impressions", force: :cascade do |t|
-    t.string "flavor_first_impression", null: false
+    t.string "first_impression", null: false
     t.bigint "flavor_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

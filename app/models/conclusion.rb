@@ -3,10 +3,12 @@
 class Conclusion < ApplicationRecord
   belongs_to :tasting_sheet
 
-  validates :evaluation,          presence: true
-  validates :optimum_temperature, presence: true
-  validates :glass,               presence: true
-  validates :vintage,             presence: true
-  validates :country,             presence: true
-  validates :grape,               presence: true
+  with_options presence: true do
+    validates :evaluation
+    validates :optimum_temperature
+    validates :glass
+    validates :vintage
+    validates :country
+    validates :grape
+  end
 end
