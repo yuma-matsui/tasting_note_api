@@ -10,4 +10,22 @@ class TastingSheet < ApplicationRecord
   validates :name,  presence: true
   validates :color, presence: true
   validates :time,  presence: true
+
+  scope :with_relations, lambda {
+    includes(
+      :taste,
+      :conclusion,
+      appearance: %i[
+        appearance_colors
+        appearance_impressions
+      ],
+      flavor: %i[
+        flavor_first_impressions
+        flavor_fruits
+        flavor_flowers
+        flavor_spices
+        flavor_impressions
+      ]
+    )
+  }
 end
