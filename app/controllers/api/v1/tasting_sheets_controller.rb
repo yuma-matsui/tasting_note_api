@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class Api::V1::TastingSheetsController < ApplicationController
-  def index; end
+  def index
+    render json: serialized(current_user.tasting_sheets.default)
+  end
 
   def create
     tasting_sheet = TastingSheetForm.new(tasting_sheet_params)
     if tasting_sheet.save
-      render json: tasting_sheet
+      render json: serialized(current_user.tasting_sheets.latest_one), status: :created
     else
       render json: tasting_sheet.errors, status: :unprocessable_entity
     end
@@ -79,5 +81,9 @@ class Api::V1::TastingSheetsController < ApplicationController
         :country,
         :grape
       )
+  end
+
+  def serialized(records)
+    TastingSheetResource.new(records).serialize
   end
 end
