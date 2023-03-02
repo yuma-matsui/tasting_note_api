@@ -2,13 +2,13 @@
 
 class Api::V1::TastingSheetsController < ApplicationController
   def index
-    render json: current_user.tasting_sheets.with_relations
+    render json: serialized(current_user.tasting_sheets.default)
   end
 
   def create
     tasting_sheet = TastingSheetForm.new(tasting_sheet_params)
     if tasting_sheet.save
-      render json: tasting_sheet, status: :created
+      render json: serialized(current_user.tasting_sheets.latest_one), status: :created
     else
       render json: tasting_sheet.errors, status: :unprocessable_entity
     end
@@ -81,5 +81,9 @@ class Api::V1::TastingSheetsController < ApplicationController
         :country,
         :grape
       )
+  end
+
+  def serialized(records)
+    TastingSheetResource.new(records).serialize
   end
 end
