@@ -11,6 +11,7 @@ class TastingSheet < ApplicationRecord
   validates :color, presence: true
   validates :time,  presence: true
 
+  scope :latest_order, -> { order(created_at: :desc) }
   scope :with_relations, lambda {
     includes(
       :taste,
@@ -28,4 +29,6 @@ class TastingSheet < ApplicationRecord
       ]
     )
   }
+  scope :latest_one, -> { with_relations.last }
+  scope :default, -> { with_relations.latest_order }
 end
