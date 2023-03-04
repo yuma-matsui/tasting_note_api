@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Api::V1::TastingSheetsController < ApplicationController
+  before_action :set_tasting_sheet, only: :destroy
+
   def index
-    render json: serialized(current_user.tasting_sheets.default)
+    render json: current_user_tasting_sheets
   end
 
   def create
@@ -14,7 +16,16 @@ class Api::V1::TastingSheetsController < ApplicationController
     end
   end
 
+  def destroy
+    @tasting_sheet.destroy!
+    render json: current_user_tasting_sheets
+  end
+
   private
+
+  def set_tasting_sheet
+    @tasting_sheet = current_user.tasting_sheets.find(params[:id])
+  end
 
   def tasting_sheet_params
     params
@@ -85,5 +96,9 @@ class Api::V1::TastingSheetsController < ApplicationController
 
   def serialized(records)
     TastingSheetResource.new(records).serialize
+  end
+
+  def current_user_tasting_sheets
+    serialized(current_user.tasting_sheets.default)
   end
 end
