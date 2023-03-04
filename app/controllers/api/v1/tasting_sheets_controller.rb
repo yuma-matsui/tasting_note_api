@@ -4,7 +4,7 @@ class Api::V1::TastingSheetsController < ApplicationController
   before_action :set_tasting_sheet, only: :destroy
 
   def index
-    render json: serialized(current_user.tasting_sheets.default)
+    render json: current_user_tasting_sheets
   end
 
   def create
@@ -18,7 +18,7 @@ class Api::V1::TastingSheetsController < ApplicationController
 
   def destroy
     @tasting_sheet.destroy!
-    head :no_content
+    render json: current_user_tasting_sheets
   end
 
   private
@@ -96,5 +96,9 @@ class Api::V1::TastingSheetsController < ApplicationController
 
   def serialized(records)
     TastingSheetResource.new(records).serialize
+  end
+
+  def current_user_tasting_sheets
+    serialized(current_user.tasting_sheets.default)
   end
 end
