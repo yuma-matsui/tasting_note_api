@@ -10,7 +10,7 @@ class Api::V1::TastingSheetsController < ApplicationController
   def create
     tasting_sheet = TastingSheetForm.new(tasting_sheet_params)
     if tasting_sheet.save
-      render json: serialized(current_user.tasting_sheets.latest_one), status: :created
+      render json: current_user_tasting_sheets, status: :created
     else
       render json: tasting_sheet.errors, status: :unprocessable_entity
     end
