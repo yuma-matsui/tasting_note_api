@@ -29,5 +29,6 @@ class TastingSheet < ApplicationRecord
       ]
     )
   }
+  scope :latest_one, -> { with_relations.last }
   scope :default, -> { with_relations.latest_order }
 end
