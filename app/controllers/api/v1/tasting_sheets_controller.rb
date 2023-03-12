@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::TastingSheetsController < ApplicationController
-  before_action :set_tasting_sheet, only: %i[show destroy]
+  before_action :set_tasting_sheet, only: %i[show destroy update]
 
   def index
     render json: current_user_tasting_sheets
@@ -18,6 +18,14 @@ class Api::V1::TastingSheetsController < ApplicationController
 
   def show
     render json: @tasting_sheet ? serialized(@tasting_sheet) : nil
+  end
+
+  def update
+    if @tasting_sheet.update(name: tasting_sheet_params[:name])
+      render json: serialized(@tasting_sheet)
+    else
+      render json: tasting_sheet.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
