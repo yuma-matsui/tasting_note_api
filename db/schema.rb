@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_19_071513) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -134,6 +134,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
     t.string "name", null: false
     t.index ["uid", "name"], name: "uid_name_users_index", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
+  end
+
+  create_table "wines", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "vintage", null: false
+    t.string "country", null: false
+    t.string "region"
+    t.string "grape", null: false
+    t.string "alcohol_percentage", null: false
+    t.text "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "appearance_colors", "appearances"
