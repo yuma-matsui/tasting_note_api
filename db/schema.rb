@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_19_072234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -124,7 +124,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "wine_id"
     t.index ["user_id"], name: "index_tasting_sheets_on_user_id"
+    t.index ["wine_id"], name: "index_tasting_sheets_on_wine_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -134,6 +136,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
     t.string "name", null: false
     t.index ["uid", "name"], name: "uid_name_users_index", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
+  end
+
+  create_table "wines", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "vintage", null: false
+    t.string "country", null: false
+    t.string "region"
+    t.string "grape", null: false
+    t.string "alcohol_percentage", null: false
+    t.text "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "appearance_colors", "appearances"
@@ -148,4 +162,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_054647) do
   add_foreign_key "flavors", "tasting_sheets"
   add_foreign_key "tastes", "tasting_sheets"
   add_foreign_key "tasting_sheets", "users"
+  add_foreign_key "tasting_sheets", "wines"
 end

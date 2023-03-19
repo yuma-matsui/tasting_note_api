@@ -2,6 +2,7 @@
 
 class TastingSheet < ApplicationRecord
   belongs_to :user
+  belongs_to :wine
   has_one :appearance, dependent: :destroy
   has_one :flavor,     dependent: :destroy
   has_one :taste,      dependent: :destroy
