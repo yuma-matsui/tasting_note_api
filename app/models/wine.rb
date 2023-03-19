@@ -7,5 +7,4 @@ class Wine < ApplicationRecord
   validates :vintage, presence: true
   validates :country, presence: true
   validates :grape,   presence: true
-  validates :memo,    presence: true
 end
