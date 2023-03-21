@@ -7,6 +7,7 @@ class TastingSheetResource < ApplicationResource
     I18n.l resource.created_at, format: :short
   end
 
+  one :wine,       resource: WineResource
   one :appearance, resource: AppearanceResource
   one :flavor,     resource: FlavorResource
   one :taste,      resource: TasteResource
