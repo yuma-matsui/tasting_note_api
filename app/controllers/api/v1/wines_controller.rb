@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::WinesController < ApplicationController
+  before_action :set_wine, only: :destroy
+
   def create
     wine = WineForm.new(wine_params)
     if wine.save
@@ -10,7 +12,16 @@ class Api::V1::WinesController < ApplicationController
     end
   end
 
+  def destroy
+    @wine.destroy!
+    head :no_content
+  end
+
   private
+
+  def set_wine
+    @wine = Wine.find(params[:id])
+  end
 
   def wine_params
     params
