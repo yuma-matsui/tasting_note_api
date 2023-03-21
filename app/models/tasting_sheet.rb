@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TastingSheet < ApplicationRecord
+  after_destroy :destroy_wine
+
   belongs_to :user
   belongs_to :wine, optional: true
   has_one :appearance, dependent: :destroy
@@ -32,4 +34,10 @@ class TastingSheet < ApplicationRecord
   }
   scope :latest_one, -> { with_relations.last }
   scope :default, -> { with_relations.latest_order }
+
+  private
+
+  def destroy_wine
+    wine.destroy!
+  end
 end
