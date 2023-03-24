@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :users, only: :destroy
       resources :sessions, only: :index
       resources :tasting_sheets, only: %i(index create destroy show update)
-      resources :wines, only: :create
+      resources :wines, only: %i(create destroy)
     end
   end
 end
