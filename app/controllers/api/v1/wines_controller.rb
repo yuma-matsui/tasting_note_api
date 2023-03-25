@@ -1,14 +1,22 @@
 # frozen_string_literal: true
 
 class Api::V1::WinesController < ApplicationController
-  before_action :set_wine, only: :destroy
+  before_action :set_wine, only: %i[update destroy]
 
   def create
-    wine = WineForm.new(wine_params)
+    wine = WineForm.new(wine_params.merge(tasting_sheet_id_params))
     if wine.save
       render json: serialized(wine.wine_record), status: :created
     else
       render json: wine.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @wine.update(wine_params)
+      render json: serialized(@wine)
+    else
+      render json: @wine.errors, status: :unprocessable_entity
     end
   end
 
@@ -35,7 +43,6 @@ class Api::V1::WinesController < ApplicationController
         :alcohol_percentage,
         :memo
       )
-      .merge(tasting_sheet_id_params)
   end
 
   def tasting_sheet_id_params
