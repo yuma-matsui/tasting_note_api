@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class WineForm < ApplicationForm
-  attr_accessor :name, :vintage, :country, :region, :grape,
-                :alcohol_percentage, :memo, :tasting_sheet_id
+  attr_accessor :name, :image, :vintage, :country, :region,
+                :grape, :alcohol_percentage, :memo, :tasting_sheet_id
 
   with_options presence: true do
     validates :name
@@ -15,6 +15,7 @@ class WineForm < ApplicationForm
     saved = true
     wine = Wine.new(
       name: name,
+      image: image,
       vintage: vintage,
       country: country,
       region: region,
