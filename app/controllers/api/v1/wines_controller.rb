@@ -36,6 +36,7 @@ class Api::V1::WinesController < ApplicationController
       .require(:wine)
       .permit(
         :name,
+        :image,
         :vintage,
         :country,
         :region,
