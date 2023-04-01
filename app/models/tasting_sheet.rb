@@ -38,6 +38,6 @@ class TastingSheet < ApplicationRecord
   private
 
   def destroy_wine
-    wine.destroy!
+    wine&.destroy!
   end
 end
