@@ -30,7 +30,7 @@ class Api::V1::TastingSheetsController < ApplicationController
 
   def destroy
     @tasting_sheet.destroy!
-    render json: current_user_tasting_sheets
+    head :no_content
   end
 
   private
