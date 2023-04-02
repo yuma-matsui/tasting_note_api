@@ -22,7 +22,7 @@ class Api::V1::TastingSheetsController < ApplicationController
 
   def update
     if @tasting_sheet.update(name: tasting_sheet_params[:name])
-      render json: serialized(@tasting_sheet)
+      head :no_content
     else
       render json: tasting_sheet.errors, status: :unprocessable_entity
     end

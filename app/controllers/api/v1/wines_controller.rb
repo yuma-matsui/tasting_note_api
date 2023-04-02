@@ -14,7 +14,7 @@ class Api::V1::WinesController < ApplicationController
 
   def update
     if @wine.update(wine_params)
-      head :no_content
+      render json: serialized(@wine)
     else
       render json: @wine.errors, status: :unprocessable_entity
     end
