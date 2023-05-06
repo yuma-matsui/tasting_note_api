@@ -3,6 +3,6 @@
 class User < ApplicationRecord
   has_many :tasting_sheets, dependent: :destroy
 
-  validates :uid,  presence: true, uniqueness: { scope: :name }
-  validates :name, presence: true
+  validates :uid, presence: true, uniqueness: { scope: :email }
+  validates :email, presence: true, uniqueness: true
 end
