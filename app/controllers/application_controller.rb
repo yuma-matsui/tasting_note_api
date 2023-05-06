@@ -13,6 +13,6 @@ class ApplicationController < ActionController::API
   end
 
   def find_current_user(payload)
-    @current_user = User.find_or_create_by!(uid: payload['sub'], name: payload['name'])
+    @current_user = User.find_or_create_by!(uid: payload['sub'], email: payload['email'])
   end
 end
