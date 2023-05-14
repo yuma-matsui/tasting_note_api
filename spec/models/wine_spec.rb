@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Wine, type: :model do
-  let(:wine) { FactoryBot.build(:wine) }
-
   describe 'validation' do
+    let(:wine) { FactoryBot.build(:wine) }
+
     it 'is valid with name, vintage, country, region, grape alcohol_percentage, memo, image' do
       expect(wine).to be_valid
     end
@@ -23,6 +23,14 @@ RSpec.describe Wine, type: :model do
     it 'is valid without image' do
       wine.image = ''
       expect(wine).to be_valid
+    end
+  end
+
+  describe 'dependent destroy' do
+    it "changes tasting_sheet's wine_id to nil when wine is destroyed" do
+      wine = FactoryBot.create(:wine, :with_tasting_sheet)
+      expect { wine.destroy }.to \
+        change { wine.tasting_sheet.wine_id }.from(wine.id).to(nil)
     end
   end
 end
