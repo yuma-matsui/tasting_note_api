@@ -4,6 +4,10 @@ class AppearanceForm < ApplicationForm
   attr_accessor :clarity, :brightness, :appearance_colors,
                 :intensity, :appearance_impressions, :consistency, :tasting_sheet_id
 
+  validates :clarity, presence: true
+  validates :brightness, presence: true
+  validates :intensity, presence: true
+  validates :consistency, presence: true
   validates :tasting_sheet_id, presence: true
   validates :appearance_colors, :appearance_impressions, array_length_check: true
 

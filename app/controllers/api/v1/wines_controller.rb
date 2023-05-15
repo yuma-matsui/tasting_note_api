@@ -4,9 +4,9 @@ class Api::V1::WinesController < ApplicationController
   before_action :set_wine, only: %i[update destroy]
 
   def create
-    wine = WineForm.new(wine_params.merge(tasting_sheet_id_params))
-    if wine.save
-      render json: serialized(wine.wine_record), status: :created
+    wine = Wine.new(wine_params)
+    if wine.save_and_update_sheet(tasting_sheet_id_params[:tasting_sheet_id])
+      render json: serialized(wine), status: :created
     else
       render json: wine.errors, status: :unprocessable_entity
     end
