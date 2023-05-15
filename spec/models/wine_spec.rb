@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Wine, type: :model do
-  describe 'validation' do
-    let(:wine) { FactoryBot.build(:wine) }
+  let(:wine) { FactoryBot.build(:wine) }
 
+  describe 'validation' do
     it 'is valid with name, vintage, country, region, grape alcohol_percentage, memo, image' do
       expect(wine).to be_valid
     end
@@ -31,6 +31,20 @@ RSpec.describe Wine, type: :model do
       wine = FactoryBot.create(:wine, :with_tasting_sheet)
       expect { wine.destroy }.to \
         change { wine.tasting_sheet.wine_id }.from(wine.id).to(nil)
+    end
+  end
+
+  describe 'save_and_update_sheet' do
+    let(:tasting_sheet) { FactoryBot.create(:tasting_sheet, :without_wine) }
+
+    it 'saves wine' do
+      expect { wine.save_and_update_sheet(tasting_sheet.id) }.to \
+        change(described_class, :count).by(1)
+    end
+
+    it "updates tasting_sheet's wine_id" do
+      wine.save_and_update_sheet(tasting_sheet.id)
+      expect(TastingSheet.all.last.wine_id).to eq(wine.id)
     end
   end
 end

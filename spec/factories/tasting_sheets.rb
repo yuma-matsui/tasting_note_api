@@ -8,6 +8,10 @@ FactoryBot.define do
     user
     wine
 
+    trait :without_wine do
+      after(:create) { |tasting_sheet| tasting_sheet.wine.destroy! }
+    end
+
     trait :with_wine do
       after(:create) { |tasting_sheet| create_list(:wine, 1, tasting_sheet: tasting_sheet) }
     end
