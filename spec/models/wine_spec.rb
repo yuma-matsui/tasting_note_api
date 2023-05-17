@@ -44,7 +44,7 @@ RSpec.describe Wine, type: :model do
 
     it "updates tasting_sheet's wine_id" do
       wine.save_and_update_sheet(tasting_sheet.id)
-      expect(TastingSheet.all.last.wine_id).to eq(wine.id)
+      expect(tasting_sheet.reload.wine_id).to eq(wine.id)
     end
   end
 end
