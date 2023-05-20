@@ -50,7 +50,7 @@ RSpec.describe 'Api::V1::Wines', type: :request do
           change(Wine, :count).by(0)
       end
 
-      it "doesn't update tasting_sheet's wine_id" do
+      it "can't update tasting_sheet's wine_id" do
         aggregate_failures do
           expect(tasting_sheet.wine_id).to eq nil
           post api_v1_wines_path params: wine_params
@@ -96,7 +96,7 @@ RSpec.describe 'Api::V1::Wines', type: :request do
         expect(response).to have_http_status :unprocessable_entity
       end
 
-      it "doesn't update wine name" do
+      it "can't update wine name" do
         aggregate_failures do
           expect(created_wine.name).to eq 'test-wine'
           put api_v1_wine_path(created_wine), params: wine_params
