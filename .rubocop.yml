@@ -6,3 +6,7 @@ inherit_gem:
   rubocop-fjord:
     - "config/rubocop.yml"
     - "config/rails.yml"
+
+RSpec/AnyInstance:
+  Exclude:
+    - spec/support/current_user_setup.rb

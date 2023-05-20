@@ -24,7 +24,7 @@ class Api::V1::TastingSheetsController < ApplicationController
     if @tasting_sheet.update(name: tasting_sheet_params[:name])
       head :no_content
     else
-      render json: tasting_sheet.errors, status: :unprocessable_entity
+      render json: @tasting_sheet.errors, status: :unprocessable_entity
     end
   end
 
