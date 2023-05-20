@@ -69,25 +69,25 @@ RSpec.describe TastingSheetForm, type: :model do
     end
 
     context 'with invalid params' do
-      it "doesn't save TastingSheet with invalid appearance" do
+      it "can't create TastingSheet with invalid appearance" do
         tasting_sheet_form.appearance[:clarity] = ''
         expect { tasting_sheet_form.save }.to \
           change(TastingSheet, :count).by(0)
       end
 
-      it "doesn't save TastingSheet with invalid flavor" do
+      it "can't create TastingSheet with invalid flavor" do
         tasting_sheet_form.flavor[:flavor_fruits] = []
         expect { tasting_sheet_form.save }.to \
           change(TastingSheet, :count).by(0)
       end
 
-      it "doesn't save TastingSheet with invalid taste" do
+      it "can't create TastingSheet with invalid taste" do
         tasting_sheet_form.taste[:attack] = ''
         expect { tasting_sheet_form.save }.to \
           change(TastingSheet, :count).by(0)
       end
 
-      it "doesn't save TastingSheet with invalid conclusion" do
+      it "can't create TastingSheet with invalid conclusion" do
         tasting_sheet_form.conclusion[:evaluation] = ''
         expect { tasting_sheet_form.save }.to \
           change(TastingSheet, :count).by(0)
