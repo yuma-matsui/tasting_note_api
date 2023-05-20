@@ -48,5 +48,9 @@ FactoryBot.define do
         grape: '甲州'
       }
     end
+
+    trait :without_user do
+      user_id { nil }
+    end
   end
 end
