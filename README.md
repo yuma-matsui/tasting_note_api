@@ -1,24 +1,15 @@
-# README
+# Tasting Note
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Tasting NoteのバックエンドRepositoryです。
 
-Things you may want to cover:
+## サービスURL
+- https://tasting-note.com
 
-* Ruby version
+## サービスRepository
+- https://github.com/yuma-matsui/tasting_note
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 開発環境
+* Docker 23.0.5
+* docker-compose 2.17.3
+* ruby 3.1.2
+* Rails 7.0.4
