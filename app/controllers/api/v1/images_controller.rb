@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::ImagesController < ApplicationController
+class API::V1::ImagesController < ApplicationController
   def create
     render json: Image.signed_url(filename, :put_object)
   end

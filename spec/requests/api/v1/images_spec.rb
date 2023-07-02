@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Images', type: :request do
+RSpec.describe 'API::V1::Images', type: :request do
   include_context 'with current user'
   let(:filename) { 'filename' }
 

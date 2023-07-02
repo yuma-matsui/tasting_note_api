@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::TastingSheets', type: :request do
+RSpec.describe 'API::V1::TastingSheets', type: :request do
   include_context 'with current user'
   let(:tasting_sheet) { FactoryBot.attributes_for(:tasting_sheet_form, :without_user) }
   let(:params) do

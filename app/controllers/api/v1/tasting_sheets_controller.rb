@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::TastingSheetsController < ApplicationController
+class API::V1::TastingSheetsController < ApplicationController
   before_action :set_tasting_sheet, only: %i[show destroy update]
 
   def index
