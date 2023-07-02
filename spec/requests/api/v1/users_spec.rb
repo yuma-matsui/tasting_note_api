@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Users', type: :request do
+RSpec.describe 'API::V1::Users', type: :request do
   include_context 'with current user'
 
   describe 'GET /api/v1/users' do
