@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Wines', type: :request do
+RSpec.describe 'API::V1::Wines', type: :request do
   include_context 'with current user'
   let(:tasting_sheet) { FactoryBot.create(:tasting_sheet, :without_wine) }
   let(:wine) { FactoryBot.attributes_for(:wine) }

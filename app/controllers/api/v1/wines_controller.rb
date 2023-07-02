@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::WinesController < ApplicationController
+class API::V1::WinesController < ApplicationController
   before_action :set_wine, only: %i[update destroy]
 
   def create
